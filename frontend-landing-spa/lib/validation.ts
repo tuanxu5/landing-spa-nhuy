@@ -10,38 +10,34 @@ import { z } from 'zod';
 export const bookingFormSchema = z.object({
   customerName: z
     .string()
-    .min(1, 'Customer name is required')
-    .max(100, 'Customer name must be less than 100 characters')
-    .regex(/^[a-zA-Z\s-]+$/, 'Customer name can only contain letters, spaces, and hyphens'),
-  
-  email: z
-    .string()
-    .min(1, 'Email is required')
-    .email('Invalid email format'),
+    .min(1, 'Vui lòng nhập họ và tên')
+    .max(100, 'Họ và tên không được vượt quá 100 ký tự')
+    .regex(/^[a-zA-ZÀ-ỹ\s-]+$/, 'Họ và tên chỉ được chứa chữ cái, khoảng trắng và dấu gạch ngang'),
   
   phone: z
     .string()
-    .min(1, 'Phone number is required')
-    .regex(/^[\d\s\-\(\)\+]+$/, 'Invalid phone number format'),
+    .min(1, 'Vui lòng nhập số điện thoại')
+    .regex(/^[\d\s\-\(\)\+]+$/, 'Số điện thoại không hợp lệ')
+    .refine((phone) => phone.replace(/\D/g, '').length >= 10, 'Số điện thoại phải có ít nhất 10 chữ số'),
   
   service: z
     .string()
-    .min(1, 'Service selection is required'),
+    .min(1, 'Vui lòng chọn dịch vụ'),
   
   preferredDate: z
     .string()
-    .min(1, 'Preferred date is required')
+    .min(1, 'Vui lòng chọn ngày hẹn')
     .refine((date) => {
       const selectedDate = new Date(date);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       return selectedDate >= today;
-    }, 'Preferred date must be today or in the future'),
+    }, 'Ngày hẹn phải là hôm nay hoặc trong tương lai'),
   
   preferredTime: z
     .string()
-    .min(1, 'Preferred time is required')
-    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Invalid time format (use HH:MM)'),
+    .min(1, 'Vui lòng chọn giờ hẹn')
+    .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, 'Giờ hẹn không hợp lệ (định dạng HH:MM)'),
   
   notes: z
     .string()

@@ -1,14 +1,5 @@
 'use client';
 
-/**
- * Services Component
- * 
- * Fetches and displays spa services from the API.
- * Implements loading states, error handling, and lazy loading for images.
- * 
- * Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 3.7, 6.1, 6.3, 6.5, 14.3
- */
-
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { postsApi } from '@/lib/api';
@@ -24,17 +15,14 @@ export default function Services() {
       try {
         setLoading(true);
         setError(null);
-        
-        // Fetch services from posts API with category filter
         const posts = await postsApi.getAll({
           category: 'service',
           status: 'published',
         });
-        
         setServices(posts);
       } catch (err) {
         console.error('Failed to fetch services:', err);
-        setError('Unable to load services. Please try again later.');
+        setError('Không thể tải dịch vụ. Vui lòng thử lại sau.');
       } finally {
         setLoading(false);
       }
@@ -46,24 +34,27 @@ export default function Services() {
   // Loading state
   if (loading) {
     return (
-      <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
+      <section id="services" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Our Services
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-4">
+              <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+              <span className="text-primary-700 text-sm font-semibold uppercase tracking-wide">
+                Dịch Vụ
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Dịch Vụ <span className="text-primary-600">Của Chúng Tôi</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-lg text-gray-600 dark:text-gray-400 px-2">
-              Discover our range of premium spa treatments
-            </p>
           </div>
 
-          {/* Loading skeleton - 2 columns on tablet */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8">
-            {[1, 2, 3].map((i) => (
+          {/* Loading skeleton */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 dark:bg-gray-700 h-48 sm:h-56 md:h-60 lg:h-64 rounded-lg mb-4"></div>
-                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                <div className="bg-gray-200 h-64 rounded-2xl mb-4"></div>
+                <div className="h-6 bg-gray-200 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
               </div>
             ))}
           </div>
@@ -75,18 +66,23 @@ export default function Services() {
   // Error state
   if (error) {
     return (
-      <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
+      <section id="services" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Our Services
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-4">
+              <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+              <span className="text-primary-700 text-sm font-semibold uppercase tracking-wide">
+                Dịch Vụ
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Dịch Vụ <span className="text-primary-600">Của Chúng Tôi</span>
             </h2>
           </div>
 
-          {/* Error message */}
-          <div className="max-w-md mx-auto bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-center">
+          <div className="max-w-md mx-auto bg-red-50 border border-red-200 rounded-2xl p-8 text-center">
             <svg
-              className="w-12 h-12 text-red-500 dark:text-red-400 mx-auto mb-4"
+              className="w-16 h-16 text-red-500 mx-auto mb-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -98,14 +94,12 @@ export default function Services() {
                 d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <p className="text-red-800 dark:text-red-300 font-medium mb-2">
-              {error}
-            </p>
+            <p className="text-red-800 font-medium mb-4">{error}</p>
             <button
               onClick={() => window.location.reload()}
-              className="mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+              className="px-6 py-3 bg-red-600 text-white rounded-full hover:bg-red-700 transition-colors cursor-pointer"
             >
-              Retry
+              Thử Lại
             </button>
           </div>
         </div>
@@ -116,16 +110,22 @@ export default function Services() {
   // Empty state
   if (services.length === 0) {
     return (
-      <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
+      <section id="services" className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-10 sm:mb-12 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-              Our Services
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-4">
+              <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+              <span className="text-primary-700 text-sm font-semibold uppercase tracking-wide">
+                Dịch Vụ
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              Dịch Vụ <span className="text-primary-600">Của Chúng Tôi</span>
             </h2>
           </div>
 
-          <div className="text-center text-gray-600 dark:text-gray-400">
-            <p>No services available at the moment. Please check back later.</p>
+          <div className="text-center text-gray-600">
+            <p>Hiện chưa có dịch vụ nào. Vui lòng quay lại sau.</p>
           </div>
         </div>
       </section>
@@ -134,40 +134,46 @@ export default function Services() {
 
   // Services display
   return (
-    <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
+    <section id="services" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-10 sm:mb-12 md:mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
-            Our Services
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary-50 rounded-full mb-4">
+            <div className="w-2 h-2 bg-primary-600 rounded-full"></div>
+            <span className="text-primary-700 text-sm font-semibold uppercase tracking-wide">
+              Dịch Vụ
+            </span>
+          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            Dịch Vụ <span className="text-primary-600">Của Chúng Tôi</span>
           </h2>
-          <p className="text-base sm:text-lg md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-2">
-            Discover our range of premium spa treatments designed to rejuvenate your body and mind
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            Khám phá các liệu pháp spa cao cấp được thiết kế để làm mới cơ thể và tâm trí bạn
           </p>
         </div>
 
-        {/* Services grid - 2 columns on tablet (md), 3 on desktop (lg) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8">
+        {/* Services grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service) => (
             <div
               key={service._id}
-              className="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer"
             >
-              {/* Service image with lazy loading */}
-              <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+              {/* Service image */}
+              <div className="relative h-64 w-full overflow-hidden bg-gray-100">
                 {service.featuredImage ? (
                   <Image
                     src={service.featuredImage}
                     alt={service.title}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200">
                     <svg
-                      className="w-16 h-16 sm:w-20 sm:h-20 text-gray-400 dark:text-gray-600"
+                      className="w-20 h-20 text-primary-400"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -176,21 +182,32 @@ export default function Services() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
                       />
                     </svg>
                   </div>
                 )}
+                
+                {/* Overlay gradient */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
               {/* Service details */}
-              <div className="p-4 sm:p-5 md:p-6">
-                <h3 className="text-lg sm:text-xl md:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-2 md:mb-3">
+              <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
                   {service.title}
                 </h3>
-                <p className="text-sm sm:text-base md:text-base text-gray-600 dark:text-gray-400 line-clamp-3">
+                <p className="text-gray-600 leading-relaxed line-clamp-3 mb-4">
                   {service.content}
                 </p>
+                
+                {/* Read more link */}
+                <div className="flex items-center gap-2 text-primary-600 font-semibold group-hover:gap-3 transition-all">
+                  <span>Tìm hiểu thêm</span>
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </div>
               </div>
             </div>
           ))}

@@ -143,86 +143,101 @@ export default function BookingList({ filters, onStatusUpdate }: BookingListProp
 
   // Bookings table
   return (
-    <Card variant="elevated" padding="none">
+    <div className="bg-white rounded-xl shadow-sm overflow-hidden">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+        <table className="min-w-full divide-y divide-gray-100">
+          <thead className="bg-gradient-to-r from-gray-50 to-gray-100">
             <tr>
-              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">
                 Khách hàng
               </th>
-              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Liên hệ
-              </th>
-              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">
                 Dịch vụ
               </th>
-              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">
                 Ngày & Giờ
               </th>
-              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-left text-xs font-bold text-gray-700 uppercase tracking-wide">
                 Trạng thái
               </th>
-              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-4 py-3 text-center text-xs font-bold text-gray-700 uppercase tracking-wide">
                 Thao tác
               </th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-50">
             {bookings.map((booking) => (
-              <tr key={booking._id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
+              <tr key={booking._id} className="hover:bg-primary-50/30 transition-colors group">
+                {/* Customer */}
+                <td className="px-4 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-                      <span className="text-sm font-bold text-primary-700">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-sm">
+                      <span className="text-sm font-bold text-white">
                         {booking.customerName.charAt(0).toUpperCase()}
                       </span>
                     </div>
-                    <div className="text-sm font-semibold text-gray-900">{booking.customerName}</div>
+                    <div>
+                      <div className="text-sm font-bold text-gray-900">{booking.customerName}</div>
+                      <div className="text-xs text-gray-500">{booking.phone}</div>
+                    </div>
                   </div>
                 </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm text-gray-900">{booking.email}</div>
-                  <div className="text-sm text-gray-500">{booking.phone}</div>
-                </td>
-                <td className="px-6 py-4">
-                  <div className="text-sm font-medium text-gray-900">{booking.service}</div>
+
+                {/* Service */}
+                <td className="px-4 py-4">
+                  <div className="text-sm font-semibold text-gray-900">{booking.service}</div>
                   {booking.notes && (
-                    <div className="text-xs text-gray-500 mt-1 max-w-xs truncate" title={booking.notes}>
-                      💬 {booking.notes}
+                    <div className="text-xs text-gray-500 mt-1 max-w-xs truncate flex items-center gap-1" title={booking.notes}>
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clipRule="evenodd" />
+                      </svg>
+                      {booking.notes}
                     </div>
                   )}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{formatDate(booking.preferredDate)}</div>
-                  <div className="text-sm text-gray-500">{booking.preferredTime}</div>
+
+                {/* Date & Time */}
+                <td className="px-4 py-4 whitespace-nowrap">
+                  <div className="flex items-center gap-2 text-sm">
+                    <svg className="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <div>
+                      <div className="font-medium text-gray-900">{formatDate(booking.preferredDate)}</div>
+                      <div className="text-xs text-gray-500">{booking.preferredTime}</div>
+                    </div>
+                  </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+
+                {/* Status */}
+                <td className="px-4 py-4 whitespace-nowrap">
                   {getStatusBadge(booking.status)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <div className="flex gap-2">
+
+                {/* Actions */}
+                <td className="px-4 py-4 whitespace-nowrap">
+                  <div className="flex gap-1.5 justify-center">
                     {booking.status === 'pending' && (
                       <>
                         <button
                           onClick={() => handleStatusUpdate(booking._id, 'confirmed')}
                           disabled={updatingId === booking._id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                          className="w-8 h-8 flex items-center justify-center text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all hover:scale-105 shadow-sm"
+                          title="Xác nhận"
                         >
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
-                          {updatingId === booking._id ? 'Đang xử lý...' : 'Xác nhận'}
                         </button>
                         <button
                           onClick={() => handleStatusUpdate(booking._id, 'cancelled')}
                           disabled={updatingId === booking._id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                          className="w-8 h-8 flex items-center justify-center text-red-700 bg-red-50 hover:bg-red-100 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all hover:scale-105"
+                          title="Hủy"
                         >
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
-                          {updatingId === booking._id ? 'Đang xử lý...' : 'Hủy'}
                         </button>
                       </>
                     )}
@@ -231,27 +246,27 @@ export default function BookingList({ filters, onStatusUpdate }: BookingListProp
                         <button
                           onClick={() => handleStatusUpdate(booking._id, 'completed')}
                           disabled={updatingId === booking._id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                          className="w-8 h-8 flex items-center justify-center text-white bg-green-600 hover:bg-green-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all hover:scale-105 shadow-sm"
+                          title="Hoàn thành"
                         >
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                           </svg>
-                          {updatingId === booking._id ? 'Đang xử lý...' : 'Hoàn thành'}
                         </button>
                         <button
                           onClick={() => handleStatusUpdate(booking._id, 'cancelled')}
                           disabled={updatingId === booking._id}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                          className="w-8 h-8 flex items-center justify-center text-red-700 bg-red-50 hover:bg-red-100 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-all hover:scale-105"
+                          title="Hủy"
                         >
-                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
-                          {updatingId === booking._id ? 'Đang xử lý...' : 'Hủy'}
                         </button>
                       </>
                     )}
                     {(booking.status === 'completed' || booking.status === 'cancelled') && (
-                      <span className="text-xs text-gray-400 italic">Không có thao tác</span>
+                      <span className="text-xs text-gray-400 italic px-2">—</span>
                     )}
                   </div>
                 </td>
@@ -260,6 +275,13 @@ export default function BookingList({ filters, onStatusUpdate }: BookingListProp
           </tbody>
         </table>
       </div>
-    </Card>
+
+      {/* Footer with count */}
+      <div className="px-4 py-3 bg-gray-50 border-t border-gray-100">
+        <div className="text-sm text-gray-600">
+          Tổng cộng: <span className="font-semibold text-primary-600">{bookings.length}</span> đặt lịch
+        </div>
+      </div>
+    </div>
   );
 }

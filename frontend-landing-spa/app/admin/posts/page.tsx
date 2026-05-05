@@ -23,7 +23,9 @@ export default function PostsPage() {
       setLoading(true);
       setError(null);
       const data = await postsApi.getAll();
-      setPosts(data);
+      // Filter out services - only show posts that are NOT services
+      const postsOnly = data.filter(post => post.category !== 'service');
+      setPosts(postsOnly);
     } catch (err) {
       const apiError = err as ApiError;
       setError(apiError.message || 'Failed to fetch posts');

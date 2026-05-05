@@ -10,39 +10,38 @@ import {
 } from 'class-validator';
 
 export class CreateBookingDto {
-  @IsNotEmpty({ message: 'Customer name is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập họ và tên' })
   @IsString()
-  @MinLength(1, { message: 'Customer name must be at least 1 character' })
-  @MaxLength(100, { message: 'Customer name must not exceed 100 characters' })
-  @Matches(/^[a-zA-Z\s\-]+$/, {
-    message: 'Customer name can only contain letters, spaces, and hyphens',
+  @MinLength(1, { message: 'Họ và tên phải có ít nhất 1 ký tự' })
+  @MaxLength(100, { message: 'Họ và tên không được vượt quá 100 ký tự' })
+  @Matches(/^[a-zA-ZÀ-ỹ\s\-]+$/, {
+    message: 'Họ và tên chỉ được chứa chữ cái, khoảng trắng và dấu gạch ngang',
   })
   customerName: string;
 
-  @IsNotEmpty({ message: 'Email is required' })
-  @IsEmail({}, { message: 'Invalid email format' })
-  email: string;
+  @IsOptional()
+  @IsEmail({}, { message: 'Định dạng email không hợp lệ' })
+  email?: string;
 
-  @IsNotEmpty({ message: 'Phone number is required' })
+  @IsNotEmpty({ message: 'Vui lòng nhập số điện thoại' })
   @IsString()
   @Matches(/^[\d\s\-\+\(\)]+$/, {
-    message:
-      'Phone number can only contain digits, spaces, and standard phone formatting characters',
+    message: 'Số điện thoại chỉ được chứa số, khoảng trắng và các ký tự định dạng chuẩn',
   })
   phone: string;
 
-  @IsNotEmpty({ message: 'Service is required' })
+  @IsNotEmpty({ message: 'Vui lòng chọn dịch vụ' })
   @IsString()
   service: string;
 
-  @IsNotEmpty({ message: 'Preferred date is required' })
-  @IsDateString({}, { message: 'Invalid date format' })
+  @IsNotEmpty({ message: 'Vui lòng chọn ngày hẹn' })
+  @IsDateString({}, { message: 'Định dạng ngày không hợp lệ' })
   preferredDate: string;
 
-  @IsNotEmpty({ message: 'Preferred time is required' })
+  @IsNotEmpty({ message: 'Vui lòng chọn giờ hẹn' })
   @IsString()
   @Matches(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/, {
-    message: 'Preferred time must be in HH:MM format',
+    message: 'Giờ hẹn phải có định dạng HH:MM',
   })
   preferredTime: string;
 

@@ -8,7 +8,7 @@ export type BookingStatus = 'pending' | 'confirmed' | 'completed' | 'cancelled';
 export interface Booking {
   _id: string;
   customerName: string;
-  email: string;
+  email?: string;
   phone: string;
   service: string;
   preferredDate: string; // ISO date string
@@ -21,7 +21,7 @@ export interface Booking {
 
 export interface CreateBookingDto {
   customerName: string;
-  email: string;
+  email?: string;
   phone: string;
   service: string;
   preferredDate: string;
