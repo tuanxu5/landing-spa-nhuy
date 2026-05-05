@@ -227,7 +227,7 @@ export default function PostsPage() {
           {posts.map((post) => (
             <div 
               key={post._id} 
-              className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-200 p-2.5"
+              className="group cursor-pointer bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary-200 p-3"
             >
               {/* Featured Image */}
               {post.featuredImage ? (
@@ -240,11 +240,14 @@ export default function PostsPage() {
                   {/* Gradient Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   
-                  {/* Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
-                    <Badge variant={getStatusVariant(post.status)} className="shadow-lg backdrop-blur-sm">
-                      {statusLabels[post.status] || post.status}
-                    </Badge>
+                  {/* Category Badge */}
+                  <div className="absolute top-3 right-3">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/95 backdrop-blur-sm text-primary-700 rounded-full text-xs font-semibold shadow-lg">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                      </svg>
+                      <span>{post.category}</span>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -267,27 +270,20 @@ export default function PostsPage() {
                     />
                   </svg>
                   
-                  {/* Badges */}
-                  <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2 z-20">
-                    <Badge variant={getStatusVariant(post.status)} className="shadow-lg">
-                      {statusLabels[post.status] || post.status}
-                    </Badge>
+                  {/* Category Badge */}
+                  <div className="absolute top-3 right-3 z-20">
+                    <div className="flex items-center gap-1.5 px-3 py-1.5 bg-white/95 backdrop-blur-sm text-primary-700 rounded-full text-xs font-semibold shadow-lg">
+                      <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                      </svg>
+                      <span>{post.category}</span>
+                    </div>
                   </div>
                 </div>
               )}
 
               {/* Content */}
               <div className="px-2">
-                {/* Category Tag */}
-                <div className="flex items-center gap-2 mb-3">
-                  <div className="flex items-center gap-1.5 px-3 py-1 bg-primary-50 text-primary-700 rounded-full text-xs font-medium">
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                    </svg>
-                    <span>{post.category}</span>
-                  </div>
-                </div>
-
                 {/* Title */}
                 <h3 className="text-xl font-bold text-gray-900 line-clamp-2 group-hover:text-primary-600 transition-colors leading-tight mb-3">
                   {post.title}
