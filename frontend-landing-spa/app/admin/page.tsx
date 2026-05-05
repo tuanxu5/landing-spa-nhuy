@@ -5,6 +5,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import { dashboardApi } from '@/lib/api';
 import Link from 'next/link';
+import { Card, Badge } from '@/components/ui';
 
 interface DashboardStats {
   totalBookings: number;
@@ -38,175 +39,184 @@ export default function AdminDashboard() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           {/* Welcome header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-            <p className="mt-2 text-sm text-gray-600">
-              Welcome back, {administrator?.username}! Here's an overview of your spa management system.
-            </p>
+          <div className="mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900 mb-1">
+                  Tổng quan
+                </h1>
+                <p className="text-base text-gray-600">
+                  Chào mừng trở lại, <span className="font-semibold text-primary-600">{administrator?.username}</span>! 
+                  Đây là tổng quan quản lý spa của bạn.
+                </p>
+              </div>
+              <div className="hidden md:block">
+                <Badge variant="primary" size="md" dot>
+                  Quản trị viên
+                </Badge>
+              </div>
+            </div>
           </div>
 
           {/* Statistics cards */}
           {loading ? (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {[1, 2, 3].map((i) => (
-                <div
-                  key={i}
-                  className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 animate-pulse"
-                >
-                  <div className="h-4 bg-gray-200 rounded w-1/2 mb-4"></div>
-                  <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-                </div>
+                <Card key={i} variant="elevated" padding="md">
+                  <div className="animate-pulse">
+                    <div className="h-3 bg-gray-200 rounded w-1/2 mb-3"></div>
+                    <div className="h-8 bg-gray-200 rounded w-1/3 mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-2/3"></div>
+                  </div>
+                </Card>
               ))}
             </div>
           ) : error ? (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-              <div className="flex">
+            <Card variant="bordered" padding="md" className="border-red-200 bg-red-50">
+              <div className="flex items-start gap-3">
                 <div className="flex-shrink-0">
-                  <svg
-                    className="h-5 w-5 text-red-400"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
+                  <div className="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center">
+                    <svg
+                      className="h-5 w-5 text-red-600"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
                 </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-red-800">Error loading statistics</h3>
-                  <p className="mt-1 text-sm text-red-700">{error}</p>
+                <div>
+                  <h3 className="text-base font-semibold text-red-900 mb-1">
+                    Lỗi tải thống kê
+                  </h3>
+                  <p className="text-sm text-red-700">{error}</p>
                 </div>
               </div>
-            </div>
+            </Card>
           ) : (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {/* Total Bookings Card */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="h-12 w-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                      <span className="text-2xl">📅</span>
+              <Link href="/admin/bookings">
+                <Card variant="elevated" padding="md" hover>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                        />
+                      </svg>
                     </div>
+                    <Badge variant="info" size="sm">Tất cả</Badge>
                   </div>
-                  <div className="ml-4 flex-1">
-                    <p className="text-sm font-medium text-gray-600">Total Bookings</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats?.totalBookings || 0}</p>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 mb-1">
+                      Tổng đặt lịch
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900 mb-2">
+                      {stats?.totalBookings || 0}
+                    </p>
+                    <p className="text-xs text-blue-600 font-medium flex items-center gap-1">
+                      Xem tất cả
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </p>
                   </div>
-                </div>
-                <div className="mt-4">
-                  <Link
-                    href="/admin/bookings"
-                    className="text-sm font-medium text-blue-600 hover:text-blue-700"
-                  >
-                    View all bookings →
-                  </Link>
-                </div>
-              </div>
+                </Card>
+              </Link>
 
               {/* Pending Bookings Card */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="h-12 w-12 rounded-lg bg-yellow-100 flex items-center justify-center">
-                      <span className="text-2xl">⏳</span>
+              <Link href="/admin/bookings?status=pending">
+                <Card variant="elevated" padding="md" hover>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center shadow-lg shadow-yellow-500/30">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
                     </div>
+                    <Badge variant="warning" size="sm" dot>Chờ duyệt</Badge>
                   </div>
-                  <div className="ml-4 flex-1">
-                    <p className="text-sm font-medium text-gray-600">Pending Bookings</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats?.pendingBookings || 0}</p>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 mb-1">
+                      Đặt lịch chờ duyệt
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900 mb-2">
+                      {stats?.pendingBookings || 0}
+                    </p>
+                    <p className="text-xs text-orange-600 font-medium flex items-center gap-1">
+                      Xem chi tiết
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </p>
                   </div>
-                </div>
-                <div className="mt-4">
-                  <Link
-                    href="/admin/bookings?status=pending"
-                    className="text-sm font-medium text-yellow-600 hover:text-yellow-700"
-                  >
-                    Review pending →
-                  </Link>
-                </div>
-              </div>
+                </Card>
+              </Link>
 
               {/* Published Posts Card */}
-              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <div className="h-12 w-12 rounded-lg bg-green-100 flex items-center justify-center">
-                      <span className="text-2xl">📝</span>
+              <Link href="/admin/posts">
+                <Card variant="elevated" padding="md" hover>
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-lg shadow-primary-500/30">
+                      <svg
+                        className="w-6 h-6 text-white"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                        />
+                      </svg>
                     </div>
+                    <Badge variant="success" size="sm">Đã xuất bản</Badge>
                   </div>
-                  <div className="ml-4 flex-1">
-                    <p className="text-sm font-medium text-gray-600">Published Posts</p>
-                    <p className="text-3xl font-bold text-gray-900">{stats?.publishedPosts || 0}</p>
+                  <div>
+                    <p className="text-xs font-semibold text-gray-600 mb-1">
+                      Bài viết đã xuất bản
+                    </p>
+                    <p className="text-3xl font-bold text-gray-900 mb-2">
+                      {stats?.publishedPosts || 0}
+                    </p>
+                    <p className="text-xs text-primary-600 font-medium flex items-center gap-1">
+                      Quản lý bài viết
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </p>
                   </div>
-                </div>
-                <div className="mt-4">
-                  <Link
-                    href="/admin/posts"
-                    className="text-sm font-medium text-green-600 hover:text-green-700"
-                  >
-                    Manage posts →
-                  </Link>
-                </div>
-              </div>
+                </Card>
+              </Link>
             </div>
           )}
-
-          {/* Quick actions */}
-          <div className="mt-8">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              <Link
-                href="/admin/bookings"
-                className="flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-              >
-                <span className="text-2xl mr-3">📅</span>
-                <div>
-                  <p className="text-sm font-medium text-gray-900">Manage Bookings</p>
-                  <p className="text-xs text-gray-500">View and update bookings</p>
-                </div>
-              </Link>
-
-              <Link
-                href="/admin/posts"
-                className="flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-              >
-                <span className="text-2xl mr-3">📝</span>
-                <div>
-                  <p className="text-sm font-medium text-gray-900">Manage Posts</p>
-                  <p className="text-xs text-gray-500">Create and edit content</p>
-                </div>
-              </Link>
-
-              <Link
-                href="/admin/settings"
-                className="flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-              >
-                <span className="text-2xl mr-3">⚙️</span>
-                <div>
-                  <p className="text-sm font-medium text-gray-900">Settings</p>
-                  <p className="text-xs text-gray-500">Account and preferences</p>
-                </div>
-              </Link>
-
-              <Link
-                href="/"
-                target="_blank"
-                className="flex items-center p-4 bg-white rounded-lg shadow-sm border border-gray-200 hover:shadow-md transition-shadow"
-              >
-                <span className="text-2xl mr-3">🌐</span>
-                <div>
-                  <p className="text-sm font-medium text-gray-900">View Landing Page</p>
-                  <p className="text-xs text-gray-500">See customer view</p>
-                </div>
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </ProtectedRoute>

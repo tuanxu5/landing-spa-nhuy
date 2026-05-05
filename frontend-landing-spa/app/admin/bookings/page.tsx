@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import BookingList from '@/components/admin/BookingList';
 import BookingFilters from '@/components/admin/BookingFilters';
+import ProtectedRoute from '@/components/admin/ProtectedRoute';
 import type { BookingStatus } from '@/types';
 
 export default function BookingsPage() {
@@ -23,23 +24,22 @@ export default function BookingsPage() {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8">
-      <div className="sm:flex sm:items-center">
-        <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">Bookings Management</h1>
-          <p className="mt-2 text-sm text-gray-700">
-            View and manage all customer bookings. Filter by status, date range, or service type.
-          </p>
-        </div>
-      </div>
+    <ProtectedRoute>
+      <div className="min-h-screen">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="mb-6">
+            <h1 className="text-3xl font-bold text-gray-900 mb-1">Quản lý đặt lịch</h1>
+            <p className="text-base text-gray-600">
+              Xem và quản lý tất cả lịch đặt của khách hàng. Lọc theo trạng thái, ngày hoặc dịch vụ.
+            </p>
+          </div>
 
-      <div className="mt-8">
-        <BookingFilters onFilterChange={handleFilterChange} />
-        
-        <div className="bg-white shadow rounded-lg overflow-hidden">
-          <BookingList filters={filters} />
+          <div className="space-y-6">
+            <BookingFilters onFilterChange={handleFilterChange} />
+            <BookingList filters={filters} />
+          </div>
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
