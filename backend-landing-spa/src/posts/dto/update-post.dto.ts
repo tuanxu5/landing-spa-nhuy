@@ -1,13 +1,12 @@
 import {
-  IsEnum,
   IsOptional,
   IsString,
-  IsUrl,
   MaxLength,
   MinLength,
   IsDateString,
+  IsEnum,
 } from 'class-validator';
-import { PostCategory, PostStatus } from '../schemas/post.schema';
+import { PostStatus } from '../schemas/post.schema';
 
 export class UpdatePostDto {
   @IsOptional()
@@ -22,14 +21,13 @@ export class UpdatePostDto {
 
   @IsOptional()
   @IsString()
-  @IsUrl({}, { message: 'Featured image must be a valid URL' })
   featuredImage?: string;
 
   @IsOptional()
-  @IsEnum(PostCategory, {
-    message: 'Category must be one of: service, promotion, information',
-  })
-  category?: PostCategory;
+  @IsString()
+  @MinLength(1, { message: 'Category must be at least 1 character' })
+  @MaxLength(50, { message: 'Category must not exceed 50 characters' })
+  category?: string;
 
   @IsOptional()
   @IsEnum(PostStatus, {

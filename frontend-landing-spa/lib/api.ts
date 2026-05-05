@@ -230,4 +230,24 @@ export const dashboardApi = {
   },
 };
 
+/**
+ * Upload API
+ */
+export const uploadApi = {
+  /**
+   * Upload an image file
+   */
+  uploadImage: async (file: File): Promise<{ filename: string; path: string; size: number; mimetype: string }> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await apiClient.post('/upload/image', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response.data;
+  },
+};
+
 export default apiClient;

@@ -1,14 +1,13 @@
 import {
-  IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
-  IsUrl,
   MaxLength,
   MinLength,
   IsDateString,
+  IsEnum,
 } from 'class-validator';
-import { PostCategory, PostStatus } from '../schemas/post.schema';
+import { PostStatus } from '../schemas/post.schema';
 
 export class CreatePostDto {
   @IsNotEmpty({ message: 'Title is required' })
@@ -23,14 +22,13 @@ export class CreatePostDto {
 
   @IsOptional()
   @IsString()
-  @IsUrl({}, { message: 'Featured image must be a valid URL' })
   featuredImage?: string;
 
   @IsNotEmpty({ message: 'Category is required' })
-  @IsEnum(PostCategory, {
-    message: 'Category must be one of: service, promotion, information',
-  })
-  category: PostCategory;
+  @IsString()
+  @MinLength(1, { message: 'Category must be at least 1 character' })
+  @MaxLength(50, { message: 'Category must not exceed 50 characters' })
+  category: string;
 
   @IsNotEmpty({ message: 'Status is required' })
   @IsEnum(PostStatus, {

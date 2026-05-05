@@ -3,11 +3,8 @@ import { Document } from 'mongoose';
 
 export type PostDocument = Post & Document;
 
-export enum PostCategory {
-  SERVICE = 'service',
-  PROMOTION = 'promotion',
-  INFORMATION = 'information',
-}
+// Category is now a free-text string instead of enum
+export type PostCategory = string;
 
 export enum PostStatus {
   DRAFT = 'draft',
@@ -27,9 +24,10 @@ export class Post {
 
   @Prop({
     required: true,
-    enum: Object.values(PostCategory),
+    type: String,
+    maxlength: 50,
   })
-  category: PostCategory;
+  category: string;
 
   @Prop({
     required: true,

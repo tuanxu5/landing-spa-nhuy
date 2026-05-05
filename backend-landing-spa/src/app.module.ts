@@ -8,6 +8,7 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { PostsModule } from './posts/posts.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { PostsModule } from './posts/posts.module';
     AuthModule,
     BookingsModule,
     PostsModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [

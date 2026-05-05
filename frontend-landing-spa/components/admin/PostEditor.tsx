@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { postsApi } from '@/lib/api';
+import { postsApi, uploadApi } from '@/lib/api';
 import { postFormSchema, formatZodErrors, type PostFormData } from '@/lib/validation';
 import { Card, Input, Button } from '@/components/ui';
 import type { Post, PostCategory, PostStatus, ApiError } from '@/types';
@@ -169,10 +169,17 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
       let imageUrl = formData.featuredImage;
       if (imageFile) {
         setUploadingImage(true);
-        // TODO: Implement actual image upload to your storage service
-        // For now, we'll use the preview URL (base64)
-        imageUrl = imagePreview;
-        setUploadingImage(false);
+        try {
+          const uploadResult = await uploadApi.uploadImage(imageFile);
+          // Construct full URL for the uploaded image
+          const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:3000';
+          imageUrl = `${baseUrl}${uploadResult.path}`;
+        } catch (uploadError: any) {
+          setApiError(uploadError.message || 'Lỗi khi tải ảnh lên');
+          return;
+        } finally {
+          setUploadingImage(false);
+        }
       }
 
       // Prepare data for API
@@ -458,7 +465,7 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
                 </button>
               </div>
             ) : (
-              <label className="relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 aspect-video flex items-center justify-center cursor-pointer hover:from-gray-200 hover:to-gray-300 transition-colors border-2 border-dashed border-gray-300 hover:border-primary-400">
+              <label className="relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 aspect-video flex items-center justify-center cursor-pointer hover:from-gray-100 hover:to-gray-150 transition-colors border-2 border-dashed border-gray-300 hover:border-primary-400">
                 <input
                   type="file"
                   accept="image/*"
