@@ -39,8 +39,7 @@ export default function AdminDashboard() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
           {/* Welcome header */}
           <div className="mb-6">
             <div className="flex items-center justify-between">
@@ -218,7 +217,6 @@ export default function AdminDashboard() {
             </div>
           )}
         </div>
-      </div>
     </ProtectedRoute>
   );
 }

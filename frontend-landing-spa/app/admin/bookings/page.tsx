@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import BookingList from '@/components/admin/BookingList';
 import BookingFilters from '@/components/admin/BookingFilters';
 import ProtectedRoute from '@/components/admin/ProtectedRoute';
@@ -14,19 +14,18 @@ export default function BookingsPage() {
     service?: string;
   }>({});
 
-  const handleFilterChange = (newFilters: {
+  const handleFilterChange = useCallback((newFilters: {
     status?: BookingStatus;
     startDate?: string;
     endDate?: string;
     service?: string;
   }) => {
     setFilters(newFilters);
-  };
+  }, []);
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
           <div className="mb-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-1">Quản lý đặt lịch</h1>
             <p className="text-base text-gray-600">
@@ -39,7 +38,6 @@ export default function BookingsPage() {
             <BookingList filters={filters} />
           </div>
         </div>
-      </div>
     </ProtectedRoute>
   );
 }

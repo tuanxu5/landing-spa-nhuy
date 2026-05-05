@@ -15,11 +15,11 @@ export default function EditPostPage() {
   };
 
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-10">
       <div className="mb-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Edit Post</h1>
-        <p className="mt-2 text-sm text-gray-700">
-          Update the post details below.
+        <h1 className="text-3xl font-bold text-gray-900 mb-1">Chỉnh sửa bài viết</h1>
+        <p className="text-base text-gray-600">
+          Cập nhật thông tin bài viết bên dưới.
         </p>
       </div>
 
