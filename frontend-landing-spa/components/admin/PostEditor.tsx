@@ -19,7 +19,7 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
     title: '',
     content: '',
     featuredImage: '',
-    category: 'service',
+    category: '',
     status: 'published', // Always published
     publishedAt: '', // Will be set by backend
   });
@@ -204,7 +204,7 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
           title: '',
           content: '',
           featuredImage: '',
-          category: 'service',
+          category: '',
           status: 'published',
           publishedAt: '',
         });
@@ -373,10 +373,7 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
             </div>
 
             {/* Submit button */}
-            <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-              <p className="text-sm text-gray-500">
-                <span className="text-red-500">*</span> Trường bắt buộc
-              </p>
+            <div className="flex items-center justify-end pt-4 border-t border-gray-200">
               <Button
                 type="submit"
                 disabled={saving}
@@ -419,66 +416,15 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
               <label htmlFor="category" className="block text-sm font-medium text-gray-700 mb-2">
                 Danh mục <span className="text-red-500">*</span>
               </label>
-              <select
+              <Input
+                type="text"
                 id="category"
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className={`block w-full rounded-lg shadow-sm text-sm cursor-pointer transition-colors ${
-                  errors.category
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500'
-                }`}
-              >
-                <option value="service">🛎️ Dịch vụ</option>
-                <option value="promotion">🎁 Khuyến mãi</option>
-                <option value="information">ℹ️ Thông tin</option>
-              </select>
-              {errors.category && (
-                <p className="mt-1 text-sm text-red-600">{errors.category}</p>
-              )}
-            </div>
-
-            {/* Status field */}
-            <div>
-              <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
-                Trạng thái <span className="text-red-500">*</span>
-              </label>
-              <select
-                id="status"
-                name="status"
-                value={formData.status}
-                onChange={handleInputChange}
-                className={`block w-full rounded-lg shadow-sm text-sm cursor-pointer transition-colors ${
-                  errors.status
-                    ? 'border-red-300 focus:border-red-500 focus:ring-red-500'
-                    : 'border-gray-300 focus:border-primary-500 focus:ring-primary-500'
-                }`}
-              >
-                <option value="draft">📝 Bản nháp</option>
-                <option value="published">✅ Đã xuất bản</option>
-              </select>
-              {errors.status && (
-                <p className="mt-1 text-sm text-red-600">{errors.status}</p>
-              )}
-            </div>
-
-            {/* Published At field */}
-            <div>
-              <label htmlFor="publishedAt" className="block text-sm font-medium text-gray-700 mb-2">
-                Ngày xuất bản
-              </label>
-              <Input
-                type="datetime-local"
-                id="publishedAt"
-                name="publishedAt"
-                value={formData.publishedAt}
-                onChange={handleInputChange}
-                error={errors.publishedAt}
+                error={errors.category}
+                placeholder="Nhập danh mục..."
               />
-              <p className="mt-1 text-xs text-gray-500">
-                Để trống để dùng thời gian hiện tại
-              </p>
             </div>
           </div>
         </Card>
@@ -493,45 +439,56 @@ export default function PostEditor({ postId, onSave }: PostEditorProps) {
           </h3>
 
           <div className="space-y-3">
-            <Input
-              type="text"
-              id="featuredImage"
-              name="featuredImage"
-              value={formData.featuredImage}
-              onChange={handleInputChange}
-              error={errors.featuredImage}
-              placeholder="https://example.com/image.jpg"
-            />
-
             {/* Image Preview */}
-            {formData.featuredImage && (
-              <div className="relative rounded-lg overflow-hidden bg-gray-100 aspect-video">
+            {imagePreview ? (
+              <div className="relative rounded-lg overflow-hidden bg-gray-100 aspect-video group">
                 <img
-                  src={formData.featuredImage}
+                  src={imagePreview}
                   alt="Preview"
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = '';
-                    e.currentTarget.style.display = 'none';
-                  }}
                 />
-              </div>
-            )}
-
-            {!formData.featuredImage && (
-              <div className="relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 aspect-video flex items-center justify-center">
-                <div className="text-center">
-                  <svg className="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <button
+                  type="button"
+                  onClick={handleRemoveImage}
+                  className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer hover:bg-red-700"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                  <p className="text-sm text-gray-500">Chưa có ảnh</p>
-                </div>
+                </button>
               </div>
+            ) : (
+              <label className="relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 aspect-video flex items-center justify-center cursor-pointer hover:from-gray-200 hover:to-gray-300 transition-colors border-2 border-dashed border-gray-300 hover:border-primary-400">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
+                  className="hidden"
+                />
+                <div className="text-center p-4">
+                  <svg className="w-12 h-12 mx-auto text-gray-400 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                  </svg>
+                  <p className="text-sm font-medium text-gray-700 mb-1">Click để tải ảnh lên</p>
+                  <p className="text-xs text-gray-500">PNG, JPG, GIF tối đa 5MB</p>
+                </div>
+              </label>
             )}
 
-            <p className="text-xs text-gray-500">
-              Nhập URL ảnh để hiển thị preview
-            </p>
+            {errors.featuredImage && (
+              <p className="text-xs text-red-600 flex items-center gap-1">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+                {errors.featuredImage}
+              </p>
+            )}
+
+            {imageFile && (
+              <p className="text-xs text-gray-600">
+                📎 {imageFile.name} ({(imageFile.size / 1024).toFixed(1)} KB)
+              </p>
+            )}
           </div>
         </Card>
       </div>

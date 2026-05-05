@@ -113,9 +113,10 @@ export const postFormSchema = z.object({
     .optional()
     .or(z.literal('')),
   
-  category: z.enum(['service', 'promotion', 'information'], {
-    message: 'Invalid category',
-  }),
+  category: z
+    .string()
+    .min(1, 'Category is required')
+    .max(50, 'Category must be less than 50 characters'),
   
   status: z.enum(['draft', 'published'], {
     message: 'Invalid status',

@@ -34,7 +34,7 @@ export interface UpdateBookingDto {
 }
 
 // Post types
-export type PostCategory = 'service' | 'promotion' | 'information';
+export type PostCategory = string; // Allow any string for flexible categories
 export type PostStatus = 'draft' | 'published';
 
 export interface Post {
