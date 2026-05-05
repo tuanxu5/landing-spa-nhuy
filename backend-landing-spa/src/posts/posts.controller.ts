@@ -18,7 +18,6 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import {
   Post as PostEntity,
-  PostCategory,
   PostStatus,
 } from './schemas/post.schema';
 import { AuthGuard } from '../auth/guards/auth.guard';
@@ -56,19 +55,14 @@ export class PostsController {
    */
   @Get()
   async findAll(
-    @Query('category') category?: PostCategory,
+    @Query('category') category?: string,
     @Query('status') status?: PostStatus,
   ): Promise<PostEntity[]> {
     const filters: PostFilters = {};
 
     // Build filters from query parameters
     if (category) {
-      // Validate category is a valid enum value
-      if (!Object.values(PostCategory).includes(category)) {
-        throw new BadRequestException(
-          `Invalid category. Must be one of: ${Object.values(PostCategory).join(', ')}`,
-        );
-      }
+      // Category is now free text, just pass it through
       filters.category = category;
     }
 

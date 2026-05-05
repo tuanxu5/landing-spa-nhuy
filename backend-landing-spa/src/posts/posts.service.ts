@@ -4,14 +4,13 @@ import { Model } from 'mongoose';
 import {
   Post,
   PostDocument,
-  PostCategory,
   PostStatus,
 } from './schemas/post.schema';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
 export interface PostFilters {
-  category?: PostCategory;
+  category?: string;
   status?: PostStatus;
 }
 

@@ -9,7 +9,7 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 import { promises as fs } from 'fs';
 import { AuthGuard } from '../auth/guards/auth.guard';
 
