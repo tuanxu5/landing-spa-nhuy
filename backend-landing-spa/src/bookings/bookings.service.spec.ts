@@ -34,7 +34,7 @@ describe('BookingsService', () => {
     mockBookingModel = jest.fn().mockImplementation(() => ({
       save: jest.fn().mockResolvedValue(mockBooking),
     }));
-    
+
     mockBookingModel.find = jest.fn().mockReturnValue(mockQuery);
     mockBookingModel.findById = jest.fn().mockReturnValue({
       exec: jest.fn(),
@@ -85,9 +85,11 @@ describe('BookingsService', () => {
       const mockBookingInstance = {
         save: mockSave,
       };
-      
+
       // Mock the model constructor
-      jest.spyOn(mockBookingModel, 'constructor' as any).mockReturnValue(mockBookingInstance);
+      jest
+        .spyOn(mockBookingModel, 'constructor' as any)
+        .mockReturnValue(mockBookingInstance);
       mockBookingModel.mockReturnValue(mockBookingInstance);
 
       const result = await service.create(createBookingDto);
@@ -131,7 +133,7 @@ describe('BookingsService', () => {
       const mockBookingInstance = {
         save: mockSave,
       };
-      
+
       mockBookingModel.mockReturnValue(mockBookingInstance);
 
       await service.create(createBookingDto);
@@ -305,7 +307,10 @@ describe('BookingsService', () => {
       const updateBookingDto: UpdateBookingDto = {
         status: BookingStatus.CONFIRMED,
       };
-      const updatedBooking = { ...mockBooking, status: BookingStatus.CONFIRMED };
+      const updatedBooking = {
+        ...mockBooking,
+        status: BookingStatus.CONFIRMED,
+      };
       const mockExec = jest.fn().mockResolvedValue(updatedBooking);
       mockBookingModel.findByIdAndUpdate.mockReturnValue({
         exec: mockExec,
@@ -328,7 +333,10 @@ describe('BookingsService', () => {
       const updateBookingDto: UpdateBookingDto = {
         status: BookingStatus.COMPLETED,
       };
-      const updatedBooking = { ...mockBooking, status: BookingStatus.COMPLETED };
+      const updatedBooking = {
+        ...mockBooking,
+        status: BookingStatus.COMPLETED,
+      };
       const mockExec = jest.fn().mockResolvedValue(updatedBooking);
       mockBookingModel.findByIdAndUpdate.mockReturnValue({
         exec: mockExec,
@@ -346,7 +354,10 @@ describe('BookingsService', () => {
       const updateBookingDto: UpdateBookingDto = {
         status: BookingStatus.CANCELLED,
       };
-      const updatedBooking = { ...mockBooking, status: BookingStatus.CANCELLED };
+      const updatedBooking = {
+        ...mockBooking,
+        status: BookingStatus.CANCELLED,
+      };
       const mockExec = jest.fn().mockResolvedValue(updatedBooking);
       mockBookingModel.findByIdAndUpdate.mockReturnValue({
         exec: mockExec,
@@ -411,7 +422,7 @@ describe('BookingsService', () => {
       const mockBookingInstance = {
         save: mockSave,
       };
-      
+
       mockBookingModel.mockReturnValue(mockBookingInstance);
 
       await expect(service.create(createBookingDto)).rejects.toThrow(

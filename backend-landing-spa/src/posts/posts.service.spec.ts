@@ -12,7 +12,8 @@ describe('PostsService', () => {
   const mockPost = {
     _id: '507f1f77bcf86cd799439011',
     title: 'Relaxing Swedish Massage',
-    content: 'Experience ultimate relaxation with our Swedish massage service...',
+    content:
+      'Experience ultimate relaxation with our Swedish massage service...',
     featuredImage: 'https://example.com/images/swedish-massage.jpg',
     category: PostCategory.SERVICE,
     status: PostStatus.PUBLISHED,
@@ -31,7 +32,7 @@ describe('PostsService', () => {
     mockPostModel = jest.fn().mockImplementation(() => ({
       save: jest.fn().mockResolvedValue(mockPost),
     }));
-    
+
     mockPostModel.find = jest.fn().mockReturnValue(mockQuery);
     mockPostModel.findOne = jest.fn().mockReturnValue({
       exec: jest.fn(),
@@ -71,7 +72,8 @@ describe('PostsService', () => {
     it('should create a post with valid data', async () => {
       const createPostDto: CreatePostDto = {
         title: 'Relaxing Swedish Massage',
-        content: 'Experience ultimate relaxation with our Swedish massage service...',
+        content:
+          'Experience ultimate relaxation with our Swedish massage service...',
         featuredImage: 'https://example.com/images/swedish-massage.jpg',
         category: PostCategory.SERVICE,
         status: PostStatus.PUBLISHED,
@@ -82,7 +84,7 @@ describe('PostsService', () => {
       const mockPostInstance = {
         save: mockSave,
       };
-      
+
       mockPostModel.mockReturnValue(mockPostInstance);
 
       const result = await service.create(createPostDto);
@@ -113,7 +115,7 @@ describe('PostsService', () => {
       const mockPostInstance = {
         save: mockSave,
       };
-      
+
       mockPostModel.mockReturnValue(mockPostInstance);
 
       const result = await service.create(createPostDto);
@@ -135,7 +137,7 @@ describe('PostsService', () => {
       const mockPostInstance = {
         save: mockSave,
       };
-      
+
       mockPostModel.mockReturnValue(mockPostInstance);
 
       await service.create(createPostDto);
@@ -189,7 +191,10 @@ describe('PostsService', () => {
       };
       mockPostModel.find.mockReturnValue(mockQuery);
 
-      const result = await service.findAll({ category: PostCategory.SERVICE }, true);
+      const result = await service.findAll(
+        { category: PostCategory.SERVICE },
+        true,
+      );
 
       expect(mockPostModel.find).toHaveBeenCalledWith({
         category: PostCategory.SERVICE,
@@ -206,7 +211,10 @@ describe('PostsService', () => {
       };
       mockPostModel.find.mockReturnValue(mockQuery);
 
-      const result = await service.findAll({ category: PostCategory.PROMOTION }, false);
+      const result = await service.findAll(
+        { category: PostCategory.PROMOTION },
+        false,
+      );
 
       expect(mockPostModel.find).toHaveBeenCalledWith({
         category: PostCategory.PROMOTION,
@@ -333,7 +341,10 @@ describe('PostsService', () => {
         exec: mockExec,
       });
 
-      const result = await service.update('507f1f77bcf86cd799439011', updatePostDto);
+      const result = await service.update(
+        '507f1f77bcf86cd799439011',
+        updatePostDto,
+      );
 
       expect(mockPostModel.findByIdAndUpdate).toHaveBeenCalledWith(
         '507f1f77bcf86cd799439011',
@@ -358,7 +369,10 @@ describe('PostsService', () => {
         exec: mockExec,
       });
 
-      const result = await service.update('507f1f77bcf86cd799439011', updatePostDto);
+      const result = await service.update(
+        '507f1f77bcf86cd799439011',
+        updatePostDto,
+      );
 
       expect(mockPostModel.findByIdAndUpdate).toHaveBeenCalledWith(
         '507f1f77bcf86cd799439011',
@@ -381,7 +395,10 @@ describe('PostsService', () => {
         exec: mockExec,
       });
 
-      const result = await service.update('507f1f77bcf86cd799439011', updatePostDto);
+      const result = await service.update(
+        '507f1f77bcf86cd799439011',
+        updatePostDto,
+      );
 
       expect(result?.category).toBe(PostCategory.PROMOTION);
     });
@@ -399,9 +416,14 @@ describe('PostsService', () => {
         exec: mockExec,
       });
 
-      const result = await service.update('507f1f77bcf86cd799439011', updatePostDto);
+      const result = await service.update(
+        '507f1f77bcf86cd799439011',
+        updatePostDto,
+      );
 
-      expect(result?.featuredImage).toBe('https://example.com/images/new-image.jpg');
+      expect(result?.featuredImage).toBe(
+        'https://example.com/images/new-image.jpg',
+      );
     });
 
     it('should convert publishedAt string to Date when updating', async () => {
@@ -437,7 +459,10 @@ describe('PostsService', () => {
         exec: mockExec,
       });
 
-      const result = await service.update('507f1f77bcf86cd799439011', updatePostDto);
+      const result = await service.update(
+        '507f1f77bcf86cd799439011',
+        updatePostDto,
+      );
 
       expect(result).toBeNull();
     });
@@ -484,7 +509,7 @@ describe('PostsService', () => {
       const mockPostInstance = {
         save: mockSave,
       };
-      
+
       mockPostModel.mockReturnValue(mockPostInstance);
 
       await expect(service.create(createPostDto)).rejects.toThrow(

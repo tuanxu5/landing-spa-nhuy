@@ -35,7 +35,7 @@ describe('AuthGuard', () => {
     }).compile();
 
     guard = module.get<AuthGuard>(AuthGuard);
-    authService = module.get(AuthService) as jest.Mocked<AuthService>;
+    authService = module.get(AuthService);
   });
 
   afterEach(() => {
@@ -46,7 +46,9 @@ describe('AuthGuard', () => {
     authorizationHeader?: string,
   ): ExecutionContext => {
     const mockRequest = {
-      headers: authorizationHeader ? { authorization: authorizationHeader } : {},
+      headers: authorizationHeader
+        ? { authorization: authorizationHeader }
+        : {},
     };
 
     return {
@@ -132,9 +134,7 @@ describe('AuthGuard', () => {
     });
 
     it('should throw UnauthorizedException when Authorization header has extra parts', async () => {
-      const context = createMockExecutionContext(
-        'Bearer token-123 extra-part',
-      );
+      const context = createMockExecutionContext('Bearer token-123 extra-part');
 
       await expect(guard.canActivate(context)).rejects.toThrow(
         UnauthorizedException,
@@ -155,9 +155,7 @@ describe('AuthGuard', () => {
       await expect(guard.canActivate(context)).rejects.toThrow(
         'Invalid or expired session',
       );
-      expect(authService.validateSession).toHaveBeenCalledWith(
-        'invalid-token',
-      );
+      expect(authService.validateSession).toHaveBeenCalledWith('invalid-token');
     });
 
     it('should throw UnauthorizedException when session validation returns null (expired token)', async () => {
@@ -170,9 +168,7 @@ describe('AuthGuard', () => {
       await expect(guard.canActivate(context)).rejects.toThrow(
         'Invalid or expired session',
       );
-      expect(authService.validateSession).toHaveBeenCalledWith(
-        'expired-token',
-      );
+      expect(authService.validateSession).toHaveBeenCalledWith('expired-token');
     });
 
     it('should handle tokens with special characters', async () => {

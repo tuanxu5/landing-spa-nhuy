@@ -86,12 +86,7 @@ describe('CreateBookingDto', () => {
     });
 
     it('should pass with various valid phone formats', async () => {
-      const validPhones = [
-        '555-0123',
-        '(555) 0123',
-        '+1 555 0123',
-        '5550123',
-      ];
+      const validPhones = ['555-0123', '(555) 0123', '+1 555 0123', '5550123'];
 
       for (const phone of validPhones) {
         dto.phone = phone;

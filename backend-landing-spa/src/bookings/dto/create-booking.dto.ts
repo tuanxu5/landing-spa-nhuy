@@ -26,7 +26,8 @@ export class CreateBookingDto {
   @IsNotEmpty({ message: 'Phone number is required' })
   @IsString()
   @Matches(/^[\d\s\-\+\(\)]+$/, {
-    message: 'Phone number can only contain digits, spaces, and standard phone formatting characters',
+    message:
+      'Phone number can only contain digits, spaces, and standard phone formatting characters',
   })
   phone: string;
 

@@ -59,7 +59,8 @@ describe('PostsController', () => {
   describe('create', () => {
     const createPostDto: CreatePostDto = {
       title: 'Relaxing Swedish Massage',
-      content: 'Experience ultimate relaxation with our Swedish massage service.',
+      content:
+        'Experience ultimate relaxation with our Swedish massage service.',
       featuredImage: 'https://example.com/image.jpg',
       category: PostCategory.SERVICE,
       status: PostStatus.PUBLISHED,
@@ -77,7 +78,9 @@ describe('PostsController', () => {
     });
 
     it('should throw BadRequestException when service throws BadRequestException', async () => {
-      const error = new BadRequestException('Title must not exceed 200 characters');
+      const error = new BadRequestException(
+        'Title must not exceed 200 characters',
+      );
       mockPostsService.create.mockRejectedValue(error);
 
       await expect(controller.create(createPostDto)).rejects.toThrow(
@@ -262,12 +265,12 @@ describe('PostsController', () => {
     it('should throw BadRequestException for invalid ID format', async () => {
       const invalidId = 'invalid-id';
 
-      await expect(
-        controller.update(invalidId, updatePostDto),
-      ).rejects.toThrow(BadRequestException);
-      await expect(
-        controller.update(invalidId, updatePostDto),
-      ).rejects.toThrow('Invalid post ID format');
+      await expect(controller.update(invalidId, updatePostDto)).rejects.toThrow(
+        BadRequestException,
+      );
+      await expect(controller.update(invalidId, updatePostDto)).rejects.toThrow(
+        'Invalid post ID format',
+      );
     });
 
     it('should re-throw BadRequestException from service', async () => {

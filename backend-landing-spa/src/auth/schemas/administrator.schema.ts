@@ -24,8 +24,7 @@ export class Administrator {
   updatedAt: Date;
 }
 
-export const AdministratorSchema =
-  SchemaFactory.createForClass(Administrator);
+export const AdministratorSchema = SchemaFactory.createForClass(Administrator);
 
 // Add unique index on username for login
 AdministratorSchema.index({ username: 1 }, { unique: true });

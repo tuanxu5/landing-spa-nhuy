@@ -1,7 +1,12 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Post, PostDocument, PostCategory, PostStatus } from './schemas/post.schema';
+import {
+  Post,
+  PostDocument,
+  PostCategory,
+  PostStatus,
+} from './schemas/post.schema';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 
@@ -12,9 +17,7 @@ export interface PostFilters {
 
 @Injectable()
 export class PostsService {
-  constructor(
-    @InjectModel(Post.name) private postModel: Model<PostDocument>,
-  ) {}
+  constructor(@InjectModel(Post.name) private postModel: Model<PostDocument>) {}
 
   /**
    * Create a new post
@@ -37,7 +40,10 @@ export class PostsService {
    * For public requests (no status filter or status=published), returns only published posts
    * Returns posts sorted by publication date in reverse chronological order
    */
-  async findAll(filters?: PostFilters, isPublicRequest: boolean = true): Promise<Post[]> {
+  async findAll(
+    filters?: PostFilters,
+    isPublicRequest: boolean = true,
+  ): Promise<Post[]> {
     const query: any = {};
 
     // Filter by category
@@ -54,17 +60,17 @@ export class PostsService {
     }
 
     // Sort by publication date in reverse chronological order (newest first)
-    return this.postModel
-      .find(query)
-      .sort({ publishedAt: -1 })
-      .exec();
+    return this.postModel.find(query).sort({ publishedAt: -1 }).exec();
   }
 
   /**
    * Find a single post by ID
    * For public requests, only returns published posts
    */
-  async findOne(id: string, isPublicRequest: boolean = true): Promise<Post | null> {
+  async findOne(
+    id: string,
+    isPublicRequest: boolean = true,
+  ): Promise<Post | null> {
     const query: any = { _id: id };
 
     // For public requests, only return published posts

@@ -1,7 +1,11 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Booking, BookingDocument, BookingStatus } from './schemas/booking.schema';
+import {
+  Booking,
+  BookingDocument,
+  BookingStatus,
+} from './schemas/booking.schema';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 
@@ -57,11 +61,11 @@ export class BookingsService {
     // Filter by date range
     if (filters?.startDate || filters?.endDate) {
       query.preferredDate = {};
-      
+
       if (filters.startDate) {
         query.preferredDate.$gte = new Date(filters.startDate);
       }
-      
+
       if (filters.endDate) {
         query.preferredDate.$lte = new Date(filters.endDate);
       }
@@ -73,10 +77,7 @@ export class BookingsService {
     }
 
     // Sort by creation date in reverse chronological order (newest first)
-    return this.bookingModel
-      .find(query)
-      .sort({ createdAt: -1 })
-      .exec();
+    return this.bookingModel.find(query).sort({ createdAt: -1 }).exec();
   }
 
   /**
@@ -90,7 +91,10 @@ export class BookingsService {
    * Update booking status
    * Validates that the status is a valid BookingStatus enum value
    */
-  async updateStatus(id: string, updateBookingDto: UpdateBookingDto): Promise<Booking | null> {
+  async updateStatus(
+    id: string,
+    updateBookingDto: UpdateBookingDto,
+  ): Promise<Booking | null> {
     // Validate status is a valid enum value
     if (!Object.values(BookingStatus).includes(updateBookingDto.status)) {
       throw new BadRequestException(

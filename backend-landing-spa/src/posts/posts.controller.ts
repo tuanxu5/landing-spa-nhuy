@@ -16,7 +16,11 @@ import {
 import { PostsService, PostFilters } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { Post as PostEntity, PostCategory, PostStatus } from './schemas/post.schema';
+import {
+  Post as PostEntity,
+  PostCategory,
+  PostStatus,
+} from './schemas/post.schema';
 import { AuthGuard } from '../auth/guards/auth.guard';
 
 @Controller('api/posts')

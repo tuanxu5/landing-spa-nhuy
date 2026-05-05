@@ -40,8 +40,10 @@ export class AuthController {
     const { username, password } = loginDto;
 
     // Validate credentials
-    const administrator =
-      await this.authService.validateCredentials(username, password);
+    const administrator = await this.authService.validateCredentials(
+      username,
+      password,
+    );
 
     if (!administrator) {
       throw new UnauthorizedException('Invalid username or password');

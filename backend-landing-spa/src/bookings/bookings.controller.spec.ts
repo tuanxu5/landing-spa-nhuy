@@ -253,7 +253,10 @@ describe('BookingsController', () => {
     };
 
     it('should update booking status successfully', async () => {
-      const updatedBooking = { ...mockBooking, status: BookingStatus.CONFIRMED };
+      const updatedBooking = {
+        ...mockBooking,
+        status: BookingStatus.CONFIRMED,
+      };
       mockBookingsService.updateStatus.mockResolvedValue(updatedBooking);
 
       const result = await controller.updateStatus(validId, updateBookingDto);

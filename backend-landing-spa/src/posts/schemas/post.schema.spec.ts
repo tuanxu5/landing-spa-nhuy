@@ -16,7 +16,8 @@ describe('PostSchema', () => {
 
     // Check for compound index on category and status
     const compoundIndex = indexes.find(
-      (index) => index[0].category !== undefined && index[0].status !== undefined,
+      (index) =>
+        index[0].category !== undefined && index[0].status !== undefined,
     );
     expect(compoundIndex).toBeDefined();
     expect(compoundIndex[0].category).toBe(1);

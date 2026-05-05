@@ -8,7 +8,8 @@ describe('CreatePostDto', () => {
   beforeEach(() => {
     dto = new CreatePostDto();
     dto.title = 'Relaxing Swedish Massage';
-    dto.content = 'Experience ultimate relaxation with our Swedish massage service.';
+    dto.content =
+      'Experience ultimate relaxation with our Swedish massage service.';
     dto.category = PostCategory.SERVICE;
     dto.status = PostStatus.PUBLISHED;
   });
