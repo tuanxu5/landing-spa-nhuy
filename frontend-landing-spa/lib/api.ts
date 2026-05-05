@@ -199,4 +199,35 @@ export const authApi = {
   },
 };
 
+/**
+ * Dashboard API
+ */
+export const dashboardApi = {
+  /**
+   * Get dashboard statistics
+   */
+  getStats: async (): Promise<{
+    totalBookings: number;
+    pendingBookings: number;
+    publishedPosts: number;
+  }> => {
+    // Fetch bookings and posts in parallel
+    const [allBookings, allPosts] = await Promise.all([
+      bookingsApi.getAll(),
+      postsApi.getAll({ status: 'published' }),
+    ]);
+
+    // Calculate statistics
+    const totalBookings = allBookings.length;
+    const pendingBookings = allBookings.filter((b) => b.status === 'pending').length;
+    const publishedPosts = allPosts.length;
+
+    return {
+      totalBookings,
+      pendingBookings,
+      publishedPosts,
+    };
+  },
+};
+
 export default apiClient;

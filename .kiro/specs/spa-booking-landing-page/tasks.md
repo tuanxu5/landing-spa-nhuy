@@ -207,8 +207,8 @@ This implementation plan breaks down the spa booking system into discrete coding
     - Test protected route redirection
     - _Requirements: 4.4, 4.5_
 
-- [-] 11. Implement admin panel navigation and layout
-  - [ ] 11.1 Create admin layout component
+- [x] 11. Implement admin panel navigation and layout
+  - [x] 11.1 Create admin layout component
     - Build admin layout with navigation sidebar or top bar
     - Display logged-in administrator's username
     - Add navigation links to bookings, posts, and settings
@@ -216,12 +216,12 @@ This implementation plan breaks down the spa booking system into discrete coding
     - Style with Tailwind CSS for responsive design
     - _Requirements: 11.1, 11.2, 11.3, 11.4, 11.5, 6.2, 7.7_
   
-  - [ ] 11.2 Create admin dashboard page
+  - [x] 11.2 Create admin dashboard page
     - Build dashboard with summary statistics (total bookings, pending bookings, published posts)
     - Add quick links to main management sections
     - _Requirements: 11.1_
 
-- [ ] 12. Implement bookings management interface
+- [-] 12. Implement bookings management interface
   - [ ] 12.1 Create BookingList component
     - Fetch bookings from GET `/api/bookings` with authentication
     - Display bookings in table format with customer details, service, date, time, status
