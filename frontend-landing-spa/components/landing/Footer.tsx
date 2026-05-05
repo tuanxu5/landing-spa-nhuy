@@ -12,21 +12,21 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-gray-900 text-gray-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-11 md:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-8 md:gap-10">
           {/* Spa Information */}
-          <div>
-            <h3 className="text-2xl font-bold text-white mb-4">Spa Nhuy</h3>
-            <p className="text-gray-400 mb-4">
+          <div className="text-center md:text-left">
+            <h3 className="text-xl sm:text-2xl md:text-2xl font-bold text-white mb-3 sm:mb-4">Spa Nhuy</h3>
+            <p className="text-sm sm:text-base md:text-base text-gray-400 mb-4 px-2 md:px-0">
               Your sanctuary for relaxation and rejuvenation. Experience the finest spa treatments in a tranquil environment.
             </p>
           </div>
 
           {/* Contact Information */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Contact Us</h4>
+          <div className="text-center md:text-left">
+            <h4 className="text-base sm:text-lg md:text-lg font-semibold text-white mb-3 sm:mb-4">Contact Us</h4>
             <ul className="space-y-3">
-              <li className="flex items-start">
+              <li className="flex items-start justify-center md:justify-start">
                 <svg
                   className="w-5 h-5 text-teal-400 mt-0.5 mr-3 flex-shrink-0"
                   fill="none"
@@ -46,12 +46,12 @@ export default function Footer() {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span className="text-gray-400">
+                <span className="text-sm sm:text-base md:text-base text-gray-400">
                   123 Wellness Street<br />
                   Spa District, City 12345
                 </span>
               </li>
-              <li className="flex items-center">
+              <li className="flex items-center justify-center md:justify-start">
                 <svg
                   className="w-5 h-5 text-teal-400 mr-3 flex-shrink-0"
                   fill="none"
@@ -65,11 +65,11 @@ export default function Footer() {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
-                <a href="tel:+1234567890" className="text-gray-400 hover:text-teal-400 transition-colors">
+                <a href="tel:+1234567890" className="text-sm sm:text-base md:text-base text-gray-400 hover:text-teal-400 transition-colors">
                   +1 (234) 567-890
                 </a>
               </li>
-              <li className="flex items-center">
+              <li className="flex items-center justify-center md:justify-start">
                 <svg
                   className="w-5 h-5 text-teal-400 mr-3 flex-shrink-0"
                   fill="none"
@@ -83,7 +83,7 @@ export default function Footer() {
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
-                <a href="mailto:info@spanhuy.com" className="text-gray-400 hover:text-teal-400 transition-colors">
+                <a href="mailto:info@spanhuy.com" className="text-sm sm:text-base md:text-base text-gray-400 hover:text-teal-400 transition-colors">
                   info@spanhuy.com
                 </a>
               </li>
@@ -91,32 +91,32 @@ export default function Footer() {
           </div>
 
           {/* Hours & Social Links */}
-          <div>
-            <h4 className="text-lg font-semibold text-white mb-4">Hours of Operation</h4>
+          <div className="text-center md:text-left">
+            <h4 className="text-base sm:text-lg md:text-lg font-semibold text-white mb-3 sm:mb-4">Hours of Operation</h4>
             <ul className="space-y-2 mb-6">
-              <li className="flex justify-between text-gray-400">
+              <li className="flex justify-between text-sm sm:text-base md:text-base text-gray-400 max-w-xs mx-auto md:mx-0">
                 <span>Monday - Friday:</span>
                 <span>9:00 AM - 8:00 PM</span>
               </li>
-              <li className="flex justify-between text-gray-400">
+              <li className="flex justify-between text-sm sm:text-base md:text-base text-gray-400 max-w-xs mx-auto md:mx-0">
                 <span>Saturday:</span>
                 <span>10:00 AM - 6:00 PM</span>
               </li>
-              <li className="flex justify-between text-gray-400">
+              <li className="flex justify-between text-sm sm:text-base md:text-base text-gray-400 max-w-xs mx-auto md:mx-0">
                 <span>Sunday:</span>
                 <span>10:00 AM - 5:00 PM</span>
               </li>
             </ul>
 
-            {/* Social Links */}
+            {/* Social Links - Touch-friendly size */}
             <div>
-              <h4 className="text-lg font-semibold text-white mb-4">Follow Us</h4>
-              <div className="flex space-x-4">
+              <h4 className="text-base sm:text-lg md:text-lg font-semibold text-white mb-3 sm:mb-4">Follow Us</h4>
+              <div className="flex space-x-4 justify-center md:justify-start">
                 <a
                   href="https://facebook.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
+                  className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
                   aria-label="Facebook"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -127,7 +127,7 @@ export default function Footer() {
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
+                  className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
                   aria-label="Instagram"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -138,7 +138,7 @@ export default function Footer() {
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
+                  className="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center hover:bg-teal-600 transition-colors"
                   aria-label="Twitter"
                 >
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -151,8 +151,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-8 border-t border-gray-800 text-center">
-          <p className="text-gray-400 text-sm">
+        <div className="mt-10 sm:mt-11 md:mt-12 pt-6 sm:pt-7 md:pt-8 border-t border-gray-800 text-center">
+          <p className="text-gray-400 text-xs sm:text-sm md:text-sm">
             &copy; {currentYear} Spa Nhuy. All rights reserved.
           </p>
         </div>

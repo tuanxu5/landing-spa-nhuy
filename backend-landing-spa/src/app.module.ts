@@ -15,11 +15,12 @@ import { PostsModule } from './posts/posts.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // Rate limiting: 100 requests per 15 minutes per IP
+    // Rate limiting: 1000 requests per 1 minute per IP (relaxed for development)
+    // For production, consider reducing to: ttl: 900000 (15 min), limit: 100
     ThrottlerModule.forRoot([
       {
         ttl: 60000, // Time window in milliseconds (1 minute)
-        limit: 100, // Maximum number of requests within the time window
+        limit: 1000, // Maximum number of requests within the time window
       },
     ]),
     DatabaseModule,

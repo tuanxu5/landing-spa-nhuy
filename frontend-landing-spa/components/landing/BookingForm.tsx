@@ -146,14 +146,14 @@ export default function BookingForm() {
   const today = new Date().toISOString().split('T')[0];
 
   return (
-    <section id="booking-form" className="w-full py-20 bg-gray-50 dark:bg-gray-800">
+    <section id="booking-form" className="w-full py-12 sm:py-16 md:py-20 bg-gray-50 dark:bg-gray-800">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="text-center mb-8 sm:mb-10 md:mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             Book Your Appointment
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
+          <p className="text-base sm:text-lg md:text-lg text-gray-600 dark:text-gray-400 px-2">
             Fill out the form below and we'll confirm your booking shortly
           </p>
         </div>
@@ -215,9 +215,9 @@ export default function BookingForm() {
         )}
 
         {/* Booking form */}
-        <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-8">
+        <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-900 rounded-lg shadow-lg p-5 sm:p-6 md:p-8">
           {/* Customer Name */}
-          <div className="mb-6">
+          <div className="mb-5 sm:mb-5 md:mb-6">
             <label
               htmlFor="customerName"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -230,7 +230,7 @@ export default function BookingForm() {
               name="customerName"
               value={formData.customerName}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+              className={`w-full px-4 py-3.5 sm:py-3 md:py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-base ${
                 errors.customerName
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-800 dark:text-white'
@@ -243,7 +243,7 @@ export default function BookingForm() {
           </div>
 
           {/* Email */}
-          <div className="mb-6">
+          <div className="mb-5 sm:mb-5 md:mb-6">
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -256,7 +256,7 @@ export default function BookingForm() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+              className={`w-full px-4 py-3.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-base ${
                 errors.email
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-800 dark:text-white'
@@ -269,7 +269,7 @@ export default function BookingForm() {
           </div>
 
           {/* Phone */}
-          <div className="mb-6">
+          <div className="mb-5 sm:mb-5 md:mb-6">
             <label
               htmlFor="phone"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -282,7 +282,7 @@ export default function BookingForm() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+              className={`w-full px-4 py-3.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-base ${
                 errors.phone
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-800 dark:text-white'
@@ -295,7 +295,7 @@ export default function BookingForm() {
           </div>
 
           {/* Service Selection */}
-          <div className="mb-6">
+          <div className="mb-5 sm:mb-5 md:mb-6">
             <label
               htmlFor="service"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -307,7 +307,7 @@ export default function BookingForm() {
               name="service"
               value={formData.service}
               onChange={handleChange}
-              className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+              className={`w-full px-4 py-3.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-base ${
                 errors.service
                   ? 'border-red-500 focus:ring-red-500'
                   : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-800 dark:text-white'
@@ -325,8 +325,8 @@ export default function BookingForm() {
             )}
           </div>
 
-          {/* Date and Time */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+          {/* Date and Time - Optimized for tablet with better spacing */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-5 md:gap-6 mb-5 sm:mb-5 md:mb-6">
             {/* Preferred Date */}
             <div>
               <label
@@ -342,7 +342,7 @@ export default function BookingForm() {
                 value={formData.preferredDate}
                 onChange={handleChange}
                 min={today}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                className={`w-full px-4 py-3.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-base ${
                   errors.preferredDate
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-800 dark:text-white'
@@ -367,7 +367,7 @@ export default function BookingForm() {
                 name="preferredTime"
                 value={formData.preferredTime}
                 onChange={handleChange}
-                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                className={`w-full px-4 py-3.5 sm:py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-base ${
                   errors.preferredTime
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-gray-300 dark:border-gray-600 focus:ring-teal-500 dark:bg-gray-800 dark:text-white'
@@ -380,7 +380,7 @@ export default function BookingForm() {
           </div>
 
           {/* Notes */}
-          <div className="mb-8">
+          <div className="mb-6 sm:mb-7 md:mb-8">
             <label
               htmlFor="notes"
               className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
@@ -393,16 +393,16 @@ export default function BookingForm() {
               value={formData.notes}
               onChange={handleChange}
               rows={4}
-              className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors dark:bg-gray-800 dark:text-white"
+              className="w-full px-4 py-3.5 sm:py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 transition-colors dark:bg-gray-800 dark:text-white text-base"
               placeholder="Any special requests or preferences..."
             />
           </div>
 
-          {/* Submit Button */}
+          {/* Submit Button - Touch-friendly size (min 44x44px) */}
           <button
             type="submit"
             disabled={submitting}
-            className={`w-full py-4 px-6 text-lg font-semibold text-white rounded-lg transition-all duration-300 ${
+            className={`w-full py-4 px-6 text-base sm:text-lg font-semibold text-white rounded-lg transition-all duration-300 min-h-[48px] ${
               submitting
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-800 transform hover:scale-[1.02] shadow-lg hover:shadow-xl'

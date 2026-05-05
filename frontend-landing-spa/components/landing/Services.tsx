@@ -46,22 +46,22 @@ export default function Services() {
   // Loading state
   if (loading) {
     return (
-      <section id="services" className="w-full py-20 bg-white dark:bg-gray-900">
+      <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               Our Services
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            <p className="text-base sm:text-lg md:text-lg text-gray-600 dark:text-gray-400 px-2">
               Discover our range of premium spa treatments
             </p>
           </div>
 
-          {/* Loading skeleton */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Loading skeleton - 2 columns on tablet */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8">
             {[1, 2, 3].map((i) => (
               <div key={i} className="animate-pulse">
-                <div className="bg-gray-200 dark:bg-gray-700 h-64 rounded-lg mb-4"></div>
+                <div className="bg-gray-200 dark:bg-gray-700 h-48 sm:h-56 md:h-60 lg:h-64 rounded-lg mb-4"></div>
                 <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
                 <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
               </div>
@@ -75,10 +75,10 @@ export default function Services() {
   // Error state
   if (error) {
     return (
-      <section id="services" className="w-full py-20 bg-white dark:bg-gray-900">
+      <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               Our Services
             </h2>
           </div>
@@ -116,10 +116,10 @@ export default function Services() {
   // Empty state
   if (services.length === 0) {
     return (
-      <section id="services" className="w-full py-20 bg-white dark:bg-gray-900">
+      <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
               Our Services
             </h2>
           </div>
@@ -134,27 +134,27 @@ export default function Services() {
 
   // Services display
   return (
-    <section id="services" className="w-full py-20 bg-white dark:bg-gray-900">
+    <section id="services" className="w-full py-12 sm:py-16 md:py-20 bg-white dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+        <div className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl font-bold text-gray-900 dark:text-white mb-3 sm:mb-4">
             Our Services
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto px-2">
             Discover our range of premium spa treatments designed to rejuvenate your body and mind
           </p>
         </div>
 
-        {/* Services grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Services grid - 2 columns on tablet (md), 3 on desktop (lg) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8">
           {services.map((service) => (
             <div
               key={service._id}
               className="group bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
             >
               {/* Service image with lazy loading */}
-              <div className="relative h-64 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
+              <div className="relative h-48 sm:h-56 md:h-60 lg:h-64 w-full overflow-hidden bg-gray-200 dark:bg-gray-700">
                 {service.featuredImage ? (
                   <Image
                     src={service.featuredImage}
@@ -167,7 +167,7 @@ export default function Services() {
                 ) : (
                   <div className="w-full h-full flex items-center justify-center">
                     <svg
-                      className="w-20 h-20 text-gray-400 dark:text-gray-600"
+                      className="w-16 h-16 sm:w-20 sm:h-20 text-gray-400 dark:text-gray-600"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -184,11 +184,11 @@ export default function Services() {
               </div>
 
               {/* Service details */}
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
+              <div className="p-4 sm:p-5 md:p-6">
+                <h3 className="text-lg sm:text-xl md:text-xl font-semibold text-gray-900 dark:text-white mb-2 sm:mb-2 md:mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600 dark:text-gray-400 line-clamp-3">
+                <p className="text-sm sm:text-base md:text-base text-gray-600 dark:text-gray-400 line-clamp-3">
                   {service.content}
                 </p>
               </div>
