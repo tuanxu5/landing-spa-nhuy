@@ -11,7 +11,7 @@ import {
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
-import { BookingsService, BookingFilters } from './bookings.service';
+import { BookingsService, BookingFilters, PaginatedBookings } from './bookings.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { Booking, BookingStatus } from './schemas/booking.schema';
@@ -42,7 +42,7 @@ export class BookingsController {
 
   /**
    * GET /api/bookings
-   * Retrieve all bookings with optional filters
+   * Retrieve all bookings with optional filters and pagination
    * Authentication will be added later
    */
   @Get()
@@ -51,7 +51,9 @@ export class BookingsController {
     @Query('startDate') startDate?: string,
     @Query('endDate') endDate?: string,
     @Query('service') service?: string,
-  ): Promise<Booking[]> {
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ): Promise<PaginatedBookings> {
     const filters: BookingFilters = {};
 
     // Build filters from query parameters
@@ -83,6 +85,23 @@ export class BookingsController {
 
     if (service) {
       filters.service = service;
+    }
+
+    // Pagination parameters
+    if (page) {
+      const pageNum = parseInt(page, 10);
+      if (isNaN(pageNum) || pageNum < 1) {
+        throw new BadRequestException('Invalid page number');
+      }
+      filters.page = pageNum;
+    }
+
+    if (limit) {
+      const limitNum = parseInt(limit, 10);
+      if (isNaN(limitNum) || limitNum < 1 || limitNum > 100) {
+        throw new BadRequestException('Invalid limit (must be between 1 and 100)');
+      }
+      filters.limit = limitNum;
     }
 
     return await this.bookingsService.findAll(filters);

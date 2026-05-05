@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { Card, Input, Select } from '@/components/ui';
-import type { BookingStatus } from '@/types';
+import { postsApi } from '@/lib/api';
+import type { BookingStatus, Post } from '@/types';
 
 interface BookingFiltersProps {
   onFilterChange: (filters: {
@@ -22,6 +23,25 @@ export default function BookingFilters({ onFilterChange }: BookingFiltersProps) 
   const [startDate, setStartDate] = useState(searchParams.get('startDate') || '');
   const [endDate, setEndDate] = useState(searchParams.get('endDate') || '');
   const [service, setService] = useState(searchParams.get('service') || '');
+  const [services, setServices] = useState<Post[]>([]);
+  const [loadingServices, setLoadingServices] = useState(true);
+
+  // Fetch services for dropdown
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        setLoadingServices(true);
+        const data = await postsApi.getAll({ category: 'service', status: 'published' });
+        setServices(data);
+      } catch (error) {
+        console.error('Failed to fetch services:', error);
+      } finally {
+        setLoadingServices(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   // Notify parent when filters change
   useEffect(() => {
@@ -121,12 +141,15 @@ export default function BookingFilters({ onFilterChange }: BookingFiltersProps) 
           <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-2">
             Dịch vụ
           </label>
-          <Input
-            type="text"
-            id="service"
+          <Select
             value={service}
-            onChange={(e) => setService(e.target.value)}
-            placeholder="Tìm theo dịch vụ..."
+            onChange={(value) => setService(value)}
+            options={[
+              { value: '', label: 'Tất cả dịch vụ' },
+              ...services.map((s) => ({ value: s.title, label: s.title })),
+            ]}
+            placeholder="Chọn dịch vụ"
+            disabled={loadingServices}
           />
         </div>
       </div>

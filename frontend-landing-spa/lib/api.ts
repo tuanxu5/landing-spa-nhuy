@@ -8,6 +8,7 @@ import type {
   CreateBookingDto,
   UpdateBookingDto,
   BookingFilters,
+  PaginatedBookings,
   Post,
   CreatePostDto,
   UpdatePostDto,
@@ -92,10 +93,10 @@ export const bookingsApi = {
   },
 
   /**
-   * Get all bookings with optional filters
+   * Get all bookings with optional filters and pagination
    */
-  getAll: async (filters?: BookingFilters): Promise<Booking[]> => {
-    const response = await apiClient.get<Booking[]>('/api/bookings', {
+  getAll: async (filters?: BookingFilters): Promise<PaginatedBookings> => {
+    const response = await apiClient.get<PaginatedBookings>('/api/bookings', {
       params: filters,
     });
     return response.data;
@@ -212,14 +213,15 @@ export const dashboardApi = {
     publishedPosts: number;
   }> => {
     // Fetch bookings and posts in parallel
-    const [allBookings, allPosts] = await Promise.all([
-      bookingsApi.getAll(),
+    const [bookingsData, pendingData, allPosts] = await Promise.all([
+      bookingsApi.getAll({ limit: 1 }), // Just get total count
+      bookingsApi.getAll({ status: 'pending', limit: 1 }), // Get pending count
       postsApi.getAll({ status: 'published' }),
     ]);
 
-    // Calculate statistics
-    const totalBookings = allBookings.length;
-    const pendingBookings = allBookings.filter((b) => b.status === 'pending').length;
+    // Calculate statistics from pagination metadata
+    const totalBookings = bookingsData.total;
+    const pendingBookings = pendingData.total;
     const publishedPosts = allPosts.length;
 
     return {

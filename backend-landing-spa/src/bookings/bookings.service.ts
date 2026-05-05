@@ -14,6 +14,16 @@ export interface BookingFilters {
   startDate?: string;
   endDate?: string;
   service?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginatedBookings {
+  data: Booking[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 @Injectable()
@@ -46,11 +56,11 @@ export class BookingsService {
   }
 
   /**
-   * Find all bookings with optional filters
+   * Find all bookings with optional filters and pagination
    * Supports filtering by status, date range, and service
-   * Returns bookings sorted by creation date in reverse chronological order
+   * Returns paginated bookings sorted by creation date in reverse chronological order
    */
-  async findAll(filters?: BookingFilters): Promise<Booking[]> {
+  async findAll(filters?: BookingFilters): Promise<PaginatedBookings> {
     const query: any = {};
 
     // Filter by status
@@ -71,13 +81,34 @@ export class BookingsService {
       }
     }
 
-    // Filter by service
+    // Filter by service (case-insensitive partial match)
     if (filters?.service) {
-      query.service = filters.service;
+      query.service = { $regex: filters.service, $options: 'i' };
     }
 
-    // Sort by creation date in reverse chronological order (newest first)
-    return this.bookingModel.find(query).sort({ createdAt: -1 }).exec();
+    // Pagination
+    const page = filters?.page || 1;
+    const limit = filters?.limit || 10;
+    const skip = (page - 1) * limit;
+
+    // Execute query with pagination
+    const [data, total] = await Promise.all([
+      this.bookingModel
+        .find(query)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .exec(),
+      this.bookingModel.countDocuments(query).exec(),
+    ]);
+
+    return {
+      data,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    };
   }
 
   /**

@@ -109,6 +109,16 @@ export interface BookingFilters {
   startDate?: string;
   endDate?: string;
   service?: string;
+  page?: number;
+  limit?: number;
+}
+
+export interface PaginatedBookings {
+  data: Booking[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
 }
 
 export interface PostFilters {
