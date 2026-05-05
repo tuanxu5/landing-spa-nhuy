@@ -148,22 +148,22 @@ export default function BookingList({ filters, onStatusUpdate }: BookingListProp
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Khách hàng
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Liên hệ
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Dịch vụ
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Ngày & Giờ
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Trạng thái
               </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+              <th scope="col" className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
                 Thao tác
               </th>
             </tr>
@@ -172,50 +172,86 @@ export default function BookingList({ filters, onStatusUpdate }: BookingListProp
             {bookings.map((booking) => (
               <tr key={booking._id} className="hover:bg-gray-50 transition-colors">
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm font-medium text-gray-900">{booking.customerName}</div>
+                  <div className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
+                      <span className="text-sm font-bold text-primary-700">
+                        {booking.customerName.charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                    <div className="text-sm font-semibold text-gray-900">{booking.customerName}</div>
+                  </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4">
                   <div className="text-sm text-gray-900">{booking.email}</div>
                   <div className="text-sm text-gray-500">{booking.phone}</div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{booking.service}</div>
+                <td className="px-6 py-4">
+                  <div className="text-sm font-medium text-gray-900">{booking.service}</div>
+                  {booking.notes && (
+                    <div className="text-xs text-gray-500 mt-1 max-w-xs truncate" title={booking.notes}>
+                      💬 {booking.notes}
+                    </div>
+                  )}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <div className="text-sm text-gray-900">{formatDate(booking.preferredDate)}</div>
+                  <div className="text-sm font-medium text-gray-900">{formatDate(booking.preferredDate)}</div>
                   <div className="text-sm text-gray-500">{booking.preferredTime}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   {getStatusBadge(booking.status)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <div className="flex gap-2">
                     {booking.status === 'pending' && (
-                      <button
-                        onClick={() => handleStatusUpdate(booking._id, 'confirmed')}
-                        disabled={updatingId === booking._id}
-                        className="text-blue-600 hover:text-blue-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                      >
-                        {updatingId === booking._id ? 'Đang xử lý...' : 'Xác nhận'}
-                      </button>
+                      <>
+                        <button
+                          onClick={() => handleStatusUpdate(booking._id, 'confirmed')}
+                          disabled={updatingId === booking._id}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                          {updatingId === booking._id ? 'Đang xử lý...' : 'Xác nhận'}
+                        </button>
+                        <button
+                          onClick={() => handleStatusUpdate(booking._id, 'cancelled')}
+                          disabled={updatingId === booking._id}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          {updatingId === booking._id ? 'Đang xử lý...' : 'Hủy'}
+                        </button>
+                      </>
                     )}
                     {booking.status === 'confirmed' && (
-                      <button
-                        onClick={() => handleStatusUpdate(booking._id, 'completed')}
-                        disabled={updatingId === booking._id}
-                        className="text-green-600 hover:text-green-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                      >
-                        {updatingId === booking._id ? 'Đang xử lý...' : 'Hoàn thành'}
-                      </button>
+                      <>
+                        <button
+                          onClick={() => handleStatusUpdate(booking._id, 'completed')}
+                          disabled={updatingId === booking._id}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          {updatingId === booking._id ? 'Đang xử lý...' : 'Hoàn thành'}
+                        </button>
+                        <button
+                          onClick={() => handleStatusUpdate(booking._id, 'cancelled')}
+                          disabled={updatingId === booking._id}
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-700 bg-red-50 hover:bg-red-100 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                        >
+                          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                          {updatingId === booking._id ? 'Đang xử lý...' : 'Hủy'}
+                        </button>
+                      </>
                     )}
-                    {(booking.status === 'pending' || booking.status === 'confirmed') && (
-                      <button
-                        onClick={() => handleStatusUpdate(booking._id, 'cancelled')}
-                        disabled={updatingId === booking._id}
-                        className="text-red-600 hover:text-red-900 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-                      >
-                        {updatingId === booking._id ? 'Đang xử lý...' : 'Hủy'}
-                      </button>
+                    {(booking.status === 'completed' || booking.status === 'cancelled') && (
+                      <span className="text-xs text-gray-400 italic">Không có thao tác</span>
                     )}
                   </div>
                 </td>

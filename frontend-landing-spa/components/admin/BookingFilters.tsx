@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Card, Input } from '@/components/ui';
+import { Card, Input, Select } from '@/components/ui';
 import type { BookingStatus } from '@/types';
 
 interface BookingFiltersProps {
@@ -76,18 +76,18 @@ export default function BookingFilters({ onFilterChange }: BookingFiltersProps) 
           <label htmlFor="status" className="block text-sm font-medium text-gray-700 mb-2">
             Trạng thái
           </label>
-          <select
-            id="status"
+          <Select
             value={status}
-            onChange={(e) => setStatus(e.target.value as BookingStatus | '')}
-            className="block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-sm cursor-pointer transition-colors"
-          >
-            <option value="">Tất cả trạng thái</option>
-            <option value="pending">Chờ xác nhận</option>
-            <option value="confirmed">Đã xác nhận</option>
-            <option value="completed">Hoàn thành</option>
-            <option value="cancelled">Đã hủy</option>
-          </select>
+            onChange={(value) => setStatus(value as BookingStatus | '')}
+            options={[
+              { value: '', label: 'Tất cả trạng thái' },
+              { value: 'pending', label: 'Chờ xác nhận' },
+              { value: 'confirmed', label: 'Đã xác nhận' },
+              { value: 'completed', label: 'Hoàn thành' },
+              { value: 'cancelled', label: 'Đã hủy' },
+            ]}
+            placeholder="Chọn trạng thái"
+          />
         </div>
 
         {/* Start date filter */}
